@@ -9,7 +9,10 @@ class storage:
         self.lenght = 0
         self.start = None
         self.end = None
-        self.method = method    #must be either pile or file
+        self.method = method
+        if self.method != "pile":
+            if self.method != "file":
+                raise ValueError("must enter either pile or file")
 
     def __str__(self):
         ch = "["
@@ -22,6 +25,9 @@ class storage:
     def __len__(self):
         return self.lenght
 
+    def __bool__(self):
+        return self.lenght != 0
+
     def append(self, value):
         if self.lenght == 0:
             self.start = self.end = link(value)
@@ -31,7 +37,8 @@ class storage:
         self.lenght += 1
 
     def pop(self):
-        if self.isEmpty(): return
+        if self.isEmpty():
+            raise IndexError(f"pop from empty {self.method}")
         if self.lenght > 0:
             if self.method == "file":
                 value = self.start.value
@@ -63,3 +70,18 @@ class storage:
             temp.append(value.gauche.value)
             value = value.gauche
         return temp
+
+n = storage("file")
+for i in range(10):
+    n.append(i)
+
+p = storage("pile")
+
+n.pop()
+print(n)
+print(len(n))
+print(n.isEmpty())
+print(p.isEmpty())
+print(n.inverse())
+print(bool(n))
+print(bool(p))
