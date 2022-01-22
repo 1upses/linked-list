@@ -1,2 +1,2 @@
 # pile-file
-pile and file implementation in python
+basic pile and file implementation in python
