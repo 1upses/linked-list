@@ -70,18 +70,3 @@ class storage:
             temp.append(value.gauche.value)
             value = value.gauche
         return temp
-
-n = storage("file")
-for i in range(10):
-    n.append(i)
-
-p = storage("pile")
-
-n.pop()
-print(n)
-print(len(n))
-print(n.isEmpty())
-print(p.isEmpty())
-print(n.inverse())
-print(bool(n))
-print(bool(p))
