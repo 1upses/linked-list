@@ -10,9 +10,8 @@ class storage:
         self.start = None
         self.end = None
         self.method = method
-        if self.method != "pile":
-            if self.method != "file":
-                raise ValueError("must enter either pile or file")
+        if self.method != "pile" and self.method != "file":
+            raise ValueError("must enter either pile or file")
 
     def __str__(self):
         ch = "["
@@ -30,8 +29,7 @@ class storage:
 
     def append(self, value):
         if self.lenght == 0:
-            self.start = link(value)
-            self.end = link(value)
+            self.start = self.end = link(value)
         else:
             self.end = link(value, self.end)
             self.end.gauche.droite = self.end
