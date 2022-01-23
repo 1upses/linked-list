@@ -30,7 +30,8 @@ class storage:
 
     def append(self, value):
         if self.lenght == 0:
-            self.start = self.end = link(value)
+            self.start = link(value)
+            self.end = link(value)
         else:
             self.end = link(value, self.end)
             self.end.gauche.droite = self.end
