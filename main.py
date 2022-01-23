@@ -70,3 +70,7 @@ class storage:
             temp.append(value.gauche.value)
             value = value.gauche
         return temp
+
+def pile(): return storage("pile")
+
+def file(): return storage("file")
