@@ -88,20 +88,3 @@ class storage:
 def pile(): return storage("pile")
 
 def file(): return storage("file")
-
-n = pile()
-for i in range(12):
-    n.append(i)
-
-p = file()
-
-n.pop()
-print(n)
-print(len(n))
-print(n.isEmpty())
-print(p.isEmpty())
-print(n.inverse())
-print(bool(n))
-print(bool(p))
-print(n)
-print(n.select(10))
