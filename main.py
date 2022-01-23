@@ -60,7 +60,7 @@ class storage:
         return value
 
     def isEmpty(self):
-        return self.start == None
+        return self.start == None 
 
     def inverse(self):
         temp = storage("pile")
@@ -71,6 +71,37 @@ class storage:
             value = value.gauche
         return temp
 
+    def select(self, value):
+        if value > self.lenght-1 or value < 0:
+            raise IndexError(f"{self.method} out of range")
+        if value > self.lenght/2:
+            pos = self.end
+            for _ in range(self.lenght-value-1):
+                pos = pos.gauche
+            return pos.value
+        else:
+            pos = self.start
+            for _ in range(value):
+                pos = pos.droite
+            return pos.value
+
 def pile(): return storage("pile")
 
 def file(): return storage("file")
+
+n = pile()
+for i in range(12):
+    n.append(i)
+
+p = file()
+
+n.pop()
+print(n)
+print(len(n))
+print(n.isEmpty())
+print(p.isEmpty())
+print(n.inverse())
+print(bool(n))
+print(bool(p))
+print(n)
+print(n.select(10))
