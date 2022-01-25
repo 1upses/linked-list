@@ -27,6 +27,22 @@ class storage:
     def __bool__(self):
         return self.lenght != 0
 
+    def __add__(self, value):
+        if type(value) != storage:
+            raise TypeError(f"can only concatenate pile or file (not \"{type(value)}\") to pile or file")
+        for i in range(len(value)):
+            self.append(value.select(i))
+        return self
+
+    def __invert__(self):
+        temp = storage("pile")
+        value = self.end
+        temp.append(self.end.value)
+        while value.gauche != None:
+            temp.append(value.gauche.value)
+            value = value.gauche
+        return temp
+
     def append(self, value):
         if self.lenght == 0:
             self.start = self.end = link(value)
@@ -61,15 +77,6 @@ class storage:
     def isEmpty(self):
         return self.start == None 
 
-    def inverse(self):
-        temp = storage("pile")
-        value = self.end
-        temp.append(self.end.value)
-        while value.gauche != None:
-            temp.append(value.gauche.value)
-            value = value.gauche
-        return temp
-
     def select(self, value):
         if value > self.lenght-1 or value < 0:
             raise IndexError(f"{self.method} out of range")
@@ -84,6 +91,48 @@ class storage:
                 pos = pos.droite
             return pos.value
 
+    def change(self, posi, value):
+        if posi > self.lenght-1 or posi < 0:
+            raise IndexError(f"{self.method} out of range")
+        if posi > self.lenght/2:
+            pos = self.end
+            for _ in range(self.lenght-posi-1):
+                pos = pos.gauche
+            pos.value = value
+            return
+        else:
+            pos = self.start
+            for _ in range(posi):
+                pos = pos.droite
+            pos.value = value
+            return
+
 def pile(): return storage("pile")
 
 def file(): return storage("file")
+
+if __name__ == "__main__":
+    n = pile()
+    for i in range(12):
+        n.append(i)
+
+    p = file()
+    for i in range(3):
+        p.append(i)
+
+    n.pop()
+    print(n)
+    print(len(n))
+    print(n.isEmpty())
+    print(p.isEmpty())
+    print(~n)
+    print(bool(n))
+    print(bool(p))
+    print(n)
+    print(n.select(10))
+    n.change(2,50)
+    print(n)
+    n.append(p)
+    print(n)
+    z = n + p
+    print(z)
