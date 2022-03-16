@@ -1,6 +1,3 @@
-from textwrap import indent
-
-
 class link:
     def __init__(self, value, gauche = None, droite = None):
         self.value = value
