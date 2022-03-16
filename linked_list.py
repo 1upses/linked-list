@@ -1,3 +1,6 @@
+from textwrap import indent
+
+
 class link:
     def __init__(self, value, gauche = None, droite = None):
         self.value = value
@@ -113,7 +116,7 @@ class linked_list:
             return
 
     def delete(self, position):
-        '''deletes element from linked list'''
+        '''deletes n element from linked list'''
         if self.isEmpty():
             raise IndexError("tried to delete element from empty linked list")
         if position == 0:
@@ -132,12 +135,17 @@ class linked_list:
             prev = current
             current = current.droite
             index += 1
+        self.lenght -= 1
         prev.droite = temp
         return prev
 
-    def index(self, index):
+    def remove(self, element):
+        '''deletes element from linked list'''
+        self.delete(self.index(element))
+
+    def index(self, element):
         '''returns the index of the element fed to the function'''
         for i in range(len(self)):
-            if self.select(i) == index:
+            if self.select(i) == element:
                 return i
-        raise ValueError(f"{index} is not in linked list")
+        raise ValueError(f"{element} is not in linked list")
