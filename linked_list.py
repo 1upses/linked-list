@@ -5,10 +5,13 @@ class link:
         self.droite = droite
 
 class linked_list:
-    def __init__(self):
+    def __init__(self, is_list: list = []):
         self.lenght = 0
         self.start = None
         self.end = None
+        if is_list:
+            for i in is_list:
+                self.append(i)
 
     def __str__(self):
         #checks if linked list is empty to print it as an empty list right from the start
@@ -16,13 +19,13 @@ class linked_list:
             return "[]"
         #checks if linked list is a matrix, and will print it out as such if it is
         vf = True
-        for i in range(len(self)):
+        for i in range(self.lenght):
             if type(self.select(i)) != linked_list:
                 vf = False
                 break
         if vf:
             S = len(self.select(0))
-            for i in range(1,len(self)):
+            for i in range(1,self.lenght):
                 if len(self.select(i)) != S:
                     vf = False
                     break
@@ -159,10 +162,24 @@ class linked_list:
 
     def index(self, element):
         '''returns the index of the element fed to the function'''
-        for i in range(len(self)):
+        for i in range(self.lenght):
             if self.select(i) == element:
                 return i
         raise ValueError(f"{element} is not in linked list")
+
+def convert_to_list(list: linked_list):
+    '''converts linked list to built-in python list'''
+    l = []
+    for i in range(len(list)):
+        l.append(list.select(i))
+    return l
+
+def convert_from_list(list: list):
+    '''converts built-in python list to linked list'''
+    l = linked_list()
+    for i in list:
+        l.append(i)
+    return l
 
 def max_linked_list(l: linked_list):
     '''returns max value of linked list'''
