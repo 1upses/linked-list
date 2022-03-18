@@ -1,6 +1,3 @@
-from textwrap import indent
-
-
 class link:
     def __init__(self, value, gauche = None, droite = None):
         self.value = value
@@ -14,10 +11,27 @@ class linked_list:
         self.end = None
 
     def __str__(self):
+        #checks if linked list is empty to print it as an empty list right from the start
+        if self.isEmpty():
+            return "[]"
+        #checks if linked list is a matrix, and will print it out as such if it is
+        vf = True
+        for i in range(len(self)):
+            if type(self.select(i)) != linked_list:
+                vf = False
+                break
+        if vf:
+            S = len(self.select(0))
+            for i in range(1,len(self)):
+                if len(self.select(i)) != S:
+                    vf = False
+                    break
         ch = "["
         link = self.start
         while link != None:
+            if link != self.start and vf: ch += ' '
             ch += f"{link.value}, "
+            if vf: ch += "\n"
             link = link.droite
         return f"{ch[:-2]}]"
 
@@ -149,3 +163,50 @@ class linked_list:
             if self.select(i) == element:
                 return i
         raise ValueError(f"{element} is not in linked list")
+
+def max_linked_list(l: linked_list):
+    '''returns max value of linked list'''
+    S = 0
+    for i in range(len(l)):
+        if l.select(i) > S:
+            S = l.select(i)
+    return S
+
+def countingSort(arr: linked_list, exp1):
+
+    n = len(arr)
+    
+    output = linked_list()
+    for _ in range(n):
+        output.append(0)
+
+    count = linked_list()
+    for _ in range(10):
+        count.append(0)
+
+    for i in range(0, n):
+        index = arr.select(i) // exp1
+        count.change(index % 10, count.select(index % 10) + 1)
+
+    for i in range(1, 10):
+        count.change(i, count.select(i) + count.select(i - 1))
+
+    i = n - 1
+    while i >= 0:
+        index = arr.select(i) // exp1
+        output.change(count.select(index % 10) - 1, arr.select(i))
+        count.change(index % 10, count.select(index % 10) - 1)
+        i -= 1
+
+    i = 0
+    for i in range(0, len(arr)):
+        arr.change(i, output.select(i))
+
+def radixSort(arr: linked_list):
+
+    max1 = max_linked_list(arr)
+
+    exp = 1
+    while max1 / exp > 1:
+        countingSort(arr, exp)
+        exp *= 10
